@@ -47,6 +47,9 @@
 #define OTG_FS_VBUS_SENSE     1
 #define OTG_HS_VBUS_SENSE     0
 
+// USB OTG FS ID pin varies between H7RS family members
+#define OTG_FS_ID_PIN  GPIO_PIN_10
+
 #define PINID_LED      0
 #define PINID_BUTTON   1
 #define PINID_UART_TX  2
