@@ -168,6 +168,10 @@ static inline void SystemClock_Config(void)
   __HAL_RCC_SBS_CLK_ENABLE();
 }
 
+/* not used yet */
+static inline void board_init2(void) {
+}
+
 #ifdef __cplusplus
  }
 #endif

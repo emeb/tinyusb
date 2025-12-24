@@ -1,6 +1,6 @@
 MCU_VARIANT = stm32h7r3xx
 CFLAGS += -DSTM32H7R3xx \
-	+= -DHSE_VALUE=12000000U
+	-DHSE_VALUE=12000000U
 
 # For flash-jlink target
 JLINK_DEVICE = stm32h7r3v8
