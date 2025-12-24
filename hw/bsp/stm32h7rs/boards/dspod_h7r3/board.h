@@ -86,6 +86,13 @@ static inline void SystemClock_Config(void)
   RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
   RCC_PeriphCLKInitTypeDef PeriphClkInit = {0};
 
+	/* this board uses only the LDO - disable the SMPS stepdown */
+	if (HAL_PWREx_ConfigSupply(PWR_LDO_SUPPLY) != HAL_OK)
+	{
+		/* Initialization error */
+		Error_Handler();
+	}
+
   RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_CSI;
   RCC_OscInitStruct.CSIState = RCC_CSI_ON;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
@@ -165,6 +172,9 @@ static inline void SystemClock_Config(void)
     Error_Handler();
   }
 
+  HAL_PWREx_EnableUSBVoltageDetector();
+  //HAL_PWREx_EnableUSBReg();
+  
   __HAL_RCC_SBS_CLK_ENABLE();
 }
 
