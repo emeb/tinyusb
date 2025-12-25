@@ -327,7 +327,7 @@ void board_init(void) {
   // OTG_FS is marked as RHPort0 by TinyUSB to be consistent across stm32 port
 
   HAL_PWREx_EnableUSBVoltageDetector();
-  HAL_PWREx_EnableUSBReg();
+  //HAL_PWREx_EnableUSBReg();
 
   __HAL_RCC_USB_OTG_FS_CLK_ENABLE();
 
