@@ -87,11 +87,11 @@ static inline void SystemClock_Config(void)
   RCC_PeriphCLKInitTypeDef PeriphClkInit = {0};
 
 	/* this board uses only the LDO - disable the SMPS stepdown */
-	if (HAL_PWREx_ConfigSupply(PWR_LDO_SUPPLY) != HAL_OK)
-	{
-		/* Initialization error */
-		Error_Handler();
-	}
+	//if (HAL_PWREx_ConfigSupply(PWR_LDO_SUPPLY) != HAL_OK)
+	//{
+	//	/* Initialization error */
+	//	Error_Handler();
+	//}
 
   RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_CSI;
   RCC_OscInitStruct.CSIState = RCC_CSI_ON;
@@ -138,7 +138,6 @@ static inline void SystemClock_Config(void)
   RCC_OscInitStruct.PLL3.PLLM = 1;
   RCC_OscInitStruct.PLL3.PLLN = 64;	// 768MHz = 64*12MHz/1
   RCC_OscInitStruct.PLL3.PLLP = 2;
-  //RCC_OscInitStruct.PLL3.PLLQ = 24;	// 32MHz for USB PLL
   RCC_OscInitStruct.PLL3.PLLQ = 16;	// 48MHz for OTG FS
   RCC_OscInitStruct.PLL3.PLLR = 2;
   RCC_OscInitStruct.PLL3.PLLS = 2;
@@ -166,30 +165,18 @@ static inline void SystemClock_Config(void)
   {
     Error_Handler();
   }
-  
-#if 0
-  /* Whoa - HAL doesn't know about RCC->CCIPR1 USBREFCKSEL[3:0] */
-  uint32_t ccipr1 = RCC->CCIPR1;
-  ccipr1 &= ~RCC_CCIPR1_USBREFCKSEL_Msk;
-  ccipr1 |= 0xB << RCC_CCIPR1_USBREFCKSEL_Pos;
-  RCC->CCIPR1 = ccipr1;
-#endif
-  
-  PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_USBOTGFS;//|RCC_PERIPHCLK_USBPHYC;
-  //PeriphClkInit.UsbPhycClockSelection = RCC_USBPHYCCLKSOURCE_PLL3Q;
-  //PeriphClkInit.UsbOtgFsClockSelection = RCC_USBOTGFSCLKSOURCE_HSI48;
+    
+  PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_USBOTGFS;
   PeriphClkInit.UsbOtgFsClockSelection = RCC_USBOTGFSCLKSOURCE_PLL3Q;
-  //PeriphClkInit.UsbOtgFsClockSelection = RCC_USBOTGFSCLKSOURCE_CLK48;
   if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
   {
     Error_Handler();
   }
 
-  HAL_PWREx_EnableUSBVoltageDetector();
-  HAL_PWREx_EnableUSBReg();
+  //HAL_PWREx_EnableUSBVoltageDetector();
+  //HAL_PWREx_EnableUSBReg();
 
-  __HAL_RCC_USB_OTG_FS_CLK_ENABLE();
-  //__HAL_RCC_USBPHYC_CLK_ENABLE();
+  //__HAL_RCC_USB_OTG_FS_CLK_ENABLE();
   __HAL_RCC_SBS_CLK_ENABLE();
 }
 
@@ -198,10 +185,6 @@ static inline void board_init2(void)
 	TU_LOG1("board_init2\n\r");
 	TU_LOG1("\tSYSCLK = %lu\n\r", HAL_RCC_GetSysClockFreq());
 	TU_LOG1("\tUSBOTGFS = %lu\n\r", HAL_RCCEx_GetPeriphCLKFreq(RCC_PERIPHCLK_USBOTGFS));
-	TU_LOG1("\tUSBPHYC = %lu\n\r", HAL_RCCEx_GetPeriphCLKFreq(RCC_PERIPHCLK_USBPHYC));
-	TU_LOG1("\tRCC_CCIPR1 = 0x%08lX\n\r", RCC->CCIPR1);
-	TU_LOG1("\tRCC_AHB1ENR = 0x%08lX\n\r", RCC->AHB1ENR);
-	TU_LOG1("\tRCC_AHB1LPENR = 0x%08lX\n\r", RCC->AHB1LPENR);
 }
 
 #ifdef __cplusplus

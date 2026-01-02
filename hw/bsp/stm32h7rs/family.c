@@ -325,6 +325,7 @@ void board_init(void) {
   //------------- USB FS -------------//
 #if (CFG_TUD_ENABLED && BOARD_TUD_RHPORT == 0) || (CFG_TUH_ENABLED && BOARD_TUH_RHPORT == 0)
   // OTG_FS is marked as RHPort0 by TinyUSB to be consistent across stm32 port
+	TU_LOG1("board_init - USB FS\n\r");
 
   HAL_PWREx_EnableUSBVoltageDetector();
   //HAL_PWREx_EnableUSBReg();
@@ -345,8 +346,6 @@ void board_init(void) {
   GPIO_InitStruct.Pin = OTG_FS_ID_PIN;
   GPIO_InitStruct.Mode = GPIO_MODE_AF_OD;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
-  GPIO_InitStruct.Alternate = GPIO_AF10_OTG_FS;
   HAL_GPIO_Init(GPIOM, &GPIO_InitStruct);
 
 #if OTG_FS_VBUS_SENSE

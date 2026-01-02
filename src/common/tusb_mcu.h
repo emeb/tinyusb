@@ -361,8 +361,8 @@
   // FS has 6, HS has 9
   #define TUP_DCD_ENDPOINT_MAX                  9
 
-  // MCU with on-chip HS Phy
-  #define TUP_RHPORT_HIGHSPEED                  1
+  // MCU with on-chip HS Phy	EMEB - override from bsp/board definition
+  #define TUP_RHPORT_HIGHSPEED                  BOARD_HIGHSPEED
 
   // Enable dcache if DMA is enabled
   #define CFG_TUD_MEM_DCACHE_ENABLE_DEFAULT     CFG_TUD_DWC2_DMA_ENABLE
