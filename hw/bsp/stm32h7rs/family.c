@@ -371,6 +371,15 @@ void board_init(void) {
   //------------- USB HS -------------//
 #if (CFG_TUD_ENABLED && BOARD_TUD_RHPORT == 1) || (CFG_TUH_ENABLED && BOARD_TUH_RHPORT == 1)
 
+  // Configure DM DP Pins for internal HS PHY
+  GPIO_InitTypeDef GPIO_InitStruct;
+  GPIO_InitStruct.Pin = GPIO_PIN_5 | GPIO_PIN_6;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
+  GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Alternate = GPIO_AF10_OTG_HS;
+  HAL_GPIO_Init(GPIOM, &GPIO_InitStruct);
+
   // Enable USB HS & ULPI Clocks
   __HAL_RCC_USB_OTG_HS_CLK_ENABLE();
   __HAL_RCC_USBPHYC_CLK_ENABLE();
